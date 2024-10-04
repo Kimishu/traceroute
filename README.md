@@ -12,6 +12,10 @@ C++ CLI was created using winsock2.h and wsws2tcpip.h
 # Go:
 ~~In dev~~
 ## Installation (C++)
+> [!NOTE]
+> traceTests.exe can be disabled by using `-DBUILD_TESTS=OFF`\
+> Default value: ON
+#
 ```bash
 $ git clone https://github.com/Kimishu/traceroute.git
 $ mkdir build && cd build
@@ -32,6 +36,10 @@ traceroute.exe --help
 And main usage "command" - simple link to destination
 ```cmd
 traceroute.exe google.com
+```
+## Testing
+```cmd
+traceTests.exe <any address>
 ```
 [//]: #
    [compiler-link]: <https://github.com/niXman/mingw-builds-binaries?tab=readme-ov-file>

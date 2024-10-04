@@ -17,10 +17,11 @@ Tracerouter::Tracerouter(std::string address): destName(std::move(address)) {
 }
 
 Tracerouter::~Tracerouter() {
-    printf("Destroyed\n");
+    printf("Done\n");
+    WSACleanup();
 }
 
-void Tracerouter::SetDestination(std::string &address) {
+void Tracerouter::SetDestination(std::string address) {
     this->destName = std::move(address);
     GetIP();
 }
@@ -48,6 +49,7 @@ void Tracerouter::GetIP() {
 
     if(getaddrinfo(this->destName.c_str(), nullptr, &hints, &res) != 0) {
         printf("%s\t[Error]: Destination doesn't exist\n", log.c_str());
+        exit(static_cast<int>(ErrorCodes::UnexistedDestionationErr));
     }
 
     for (; res != nullptr; res=res->ai_next)
@@ -59,8 +61,8 @@ void Tracerouter::GetIP() {
 void Tracerouter::Trace() {
     int sock = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
     if (sock < 0) {
-        printf("%s[Error]: Socket creation failed\n", log.c_str());
-        exit(1);
+        printf("%s\t[Error]: Socket creation failed\n", log.c_str());
+        exit(static_cast<int>(ErrorCodes::SocketCreationErr));
     }
 
     sockaddr_in destinationAddress{};
@@ -75,7 +77,7 @@ void Tracerouter::Trace() {
 
     //Something weird happenes here... Looks like timeout doesnt work at all, lol
     //Due to weird anomaly when i setting the value to 150, the received packet doesn't throw an error.
-    timeval timeout;
+    timeval timeout{};
     timeout.tv_sec = 150;
     timeout.tv_usec = 0;
     setsockopt(sock, SOL_SOCKET, SO_SNDTIMEO, (const char*)&timeout, sizeof(timeout));
@@ -138,6 +140,7 @@ void Tracerouter::Init() {
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
         std::cerr << "WSAStartup failed." << std::endl;
+        exit(static_cast<int>(ErrorCodes::WSAStartupErr));
     }
 }
 

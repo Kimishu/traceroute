@@ -64,16 +64,21 @@ class Tracerouter {
         uint32_t sourceIP;
         uint32_t destIP;
     };
-
 public:
     Tracerouter();
     Tracerouter(std::string address);
     ~Tracerouter();
     //
-    void SetDestination(std::string& address);
+    void SetDestination(std::string address);
     void PrintDestinationInfo();
     //
     void Trace();
+
+    enum class ErrorCodes {
+        UnexistedDestionationErr = 1,
+        SocketCreationErr,
+        WSAStartupErr,
+    };
 };
 
 #endif //TRACEROUTE_TRACEROUTER_H
