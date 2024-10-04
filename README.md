@@ -20,9 +20,11 @@ $ cmake --build .
 ```
 Now u can put .exe file in any $PATH folder (or create ur own) and call it from any place.
 ## Usage
-`After program building recommended to use default CMD (not git bash) to dodge segmentation fault errors`
-`Also u should disable your firewall to see full and correct router path to destination address`
-`If u dont do that, u CAN reach the destination but u CANT see any info about routers.`
+> [!CAUTION]
+> After program building recommended to use default CMD (not git bash) to dodge segmentation fault errors.\
+> Also u should disable your firewall to see full and correct router path to destination address.\
+> If u dont do that, u CAN reach the destination but u CANT see any info about routers.
+
 Help command can be called like this or by providing wrong args :0
 ```cmd
 traceroute.exe --help 
